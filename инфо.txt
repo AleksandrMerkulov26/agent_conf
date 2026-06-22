@@ -1,0 +1,94 @@
+# 1. Установи зависимости
+pip install -r requirements.txt
+
+# 2. Настрой .env
+cp .env.example .env
+# Отредактируй .env и добавь токены
+
+# 3. Запусти с любым запросом
+python agent.py "payments"
+python agent.py "https://api.payments.internal"
+python agent.py "ошибка авторизации"
+
+
+
+
+ Как заполнить .env для реальной работы
+Теперь создай сам файл .env и заполни его:
+
+bash
+# Копируем шаблон
+cp .env.example .env
+
+# Открываем .env в редакторе
+nano .env  # или vi, или блокнот
+Пример заполнения для реальной компании:
+bash
+# ---------- CONFLUENCE ----------
+CONFLUENCE_URL=https://mycompany.atlassian.net/wiki
+CONFLUENCE_TOKEN=ATATT3FfF03FcF8F1fF0fF3FfF3FfF3FfF3FfF3
+CONFLUENCE_EMAIL=ivan.petrov@mycompany.com
+
+# ---------- GIGACHAT ----------
+GIGACHAT_URL=https://gigachat.mycompany.com/api/v1
+GIGACHAT_TOKEN=giga_xyz_12345_abcdef_67890
+
+# ---------- SLACK ----------
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T01ABC123/B02DEF456/abc123def456ghi789jkl
+
+# ---------- НАСТРОЙКИ ----------
+CACHE_DAYS=30
+MAX_PAGES_TO_ANALYZE=3
+LOG_LEVEL=INFO
+AUTO_SLACK_ASK=true
+🛠️ Как получить все эти токены (пошаговая инструкция)
+1. Токен для Confluence
+Зайди в свой профиль Atlassian: https://id.atlassian.com/manage-profile/security/api-tokens
+
+Нажми "Create API token"
+
+Дай ему имя (например, agent-finder-token)
+
+Скопируй полученный токен (он выглядит как ATATT3FfF03FcF8...)
+
+Вставь в CONFLUENCE_TOKEN
+
+⚠️ Важно: Токен показывается только один раз! Сохрани его сразу.
+
+2. Токен для GigaChat
+Способ зависит от того, как настроен GigaChat у вас в компании:
+
+Вариант A (OAuth2):
+
+bash
+# Тебе понадобятся client_id и client_secret
+# Обычно их выдает администратор системы
+GIGACHAT_TOKEN=your_oauth2_token
+GIGACHAT_AUTH_ID=your_client_id
+Вариант B (API Key):
+
+bash
+# Просто вставляешь ключ
+GIGACHAT_TOKEN=giga_xyz_12345_abcdef
+3. Webhook для Slack
+Зайди в Slack: https://api.slack.com/apps
+
+Нажми "Create New App" → "From scratch"
+
+Дай имя (например, Agent Finder)
+
+Выбери свой workspace
+
+В меню слева выбери "Incoming Webhooks"
+
+Включи переключатель "Activate Incoming Webhooks"
+
+Нажми "Add New Webhook to Workspace"
+
+Выбери канал (например, #tech-support)
+
+Скопируй полученный URL (выглядит как https://hooks.slack.com/services/T...)
+
+Вставь в SLACK_WEBHOOK_URL
+
+🧪 Как проверить, что настройки работают
