@@ -1,0 +1,17 @@
+# ---------- CONFLUENCE ----------
+CONFLUENCE_URL=https://mycompany.atlassian.net/wiki
+CONFLUENCE_TOKEN=ATATT3FfF03FcF8F1fF0fF3FfF3FfF3FfF3FfF3
+CONFLUENCE_EMAIL=ivan.petrov@mycompany.com
+
+# ---------- GIGACHAT ----------
+GIGACHAT_URL=https://gigachat.mycompany.com/api/v1
+GIGACHAT_TOKEN=giga_xyz_12345_abcdef_67890
+
+# ---------- SLACK ----------
+SLACK_WEBHOOK_URL=https://hooks.slack.com/services/T01ABC123/B02DEF456/abc123def456ghi789jkl
+
+# ---------- НАСТРОЙКИ ----------
+CACHE_DAYS=30
+MAX_PAGES_TO_ANALYZE=3
+LOG_LEVEL=INFO
+AUTO_SLACK_ASK=true
