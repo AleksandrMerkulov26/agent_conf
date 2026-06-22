@@ -8,15 +8,17 @@ class Config:
     # ---------- CONFLUENCE ----------
     confluence_url: str
     confluence_token: str
-    confluence_email: str = ""  # Опционально, для некоторых типов авторизации
+    confluence_email: str = ""
     
     # ---------- GIGACHAT ----------
     gigachat_url: str
     gigachat_token: str
-    gigachat_auth_id: str = ""  # Для OAuth2, если требуется
+    gigachat_auth_id: str = ""
     
-    # ---------- SLACK ----------
-    slack_webhook_url: str = ""  # Опционально, если не используешь Slack
+    # ---------- СБЕРЧАТ ----------
+    sberchat_webhook_url: str = ""  # Webhook URL для бота
+    sberchat_bot_token: str = ""    # Токен бота (если используется)
+    sberchat_chat_id: str = ""      # ID чата по умолчанию
     
     # ---------- НАСТРОЙКИ КЕША ----------
     cache_days: int = 30
@@ -33,47 +35,38 @@ class Config:
     
     # ---------- РЕЖИМЫ РАБОТЫ ----------
     silent_mode: bool = False
-    auto_slack_ask: bool = True
+    auto_sberchat_ask: bool = True  # Вместо auto_slack_ask
     
     @classmethod
     def from_env(cls):
-        """Загружает настройки из переменных окружения"""
-        load_dotenv()  # Загружаем .env файл
+        load_dotenv()
         
         return cls(
-            # Confluence
             confluence_url=os.getenv("CONFLUENCE_URL", ""),
             confluence_token=os.getenv("CONFLUENCE_TOKEN", ""),
             confluence_email=os.getenv("CONFLUENCE_EMAIL", ""),
             
-            # GigaChat
             gigachat_url=os.getenv("GIGACHAT_URL", ""),
             gigachat_token=os.getenv("GIGACHAT_TOKEN", ""),
             gigachat_auth_id=os.getenv("GIGACHAT_AUTH_ID", ""),
             
-            # Slack
-            slack_webhook_url=os.getenv("SLACK_WEBHOOK_URL", ""),
+            # СберЧат
+            sberchat_webhook_url=os.getenv("SBERCHAT_WEBHOOK_URL", ""),
+            sberchat_bot_token=os.getenv("SBERCHAT_BOT_TOKEN", ""),
+            sberchat_chat_id=os.getenv("SBERCHAT_CHAT_ID", ""),
             
-            # Настройки кеша (с преобразованием типов)
             cache_days=int(os.getenv("CACHE_DAYS", "30")),
             cache_file=os.getenv("CACHE_FILE", "owner_cache.json"),
-            
-            # Настройки поиска
             max_pages_to_analyze=int(os.getenv("MAX_PAGES_TO_ANALYZE", "5")),
             max_content_length=int(os.getenv("MAX_CONTENT_LENGTH", "5000")),
             follow_links_depth=int(os.getenv("FOLLOW_LINKS_DEPTH", "1")),
-            
-            # Настройки логирования
             log_level=os.getenv("LOG_LEVEL", "INFO"),
             log_file=os.getenv("LOG_FILE", "agent.log"),
-            
-            # Режимы работы (с преобразованием в bool)
             silent_mode=os.getenv("SILENT_MODE", "false").lower() == "true",
-            auto_slack_ask=os.getenv("AUTO_SLACK_ASK", "true").lower() == "true",
+            auto_sberchat_ask=os.getenv("AUTO_SBERCHAT_ASK", "true").lower() == "true",
         )
     
     def validate(self):
-        """Проверяет, что все обязательные настройки заполнены"""
         required = [
             ("CONFLUENCE_URL", self.confluence_url),
             ("CONFLUENCE_TOKEN", self.confluence_token),
